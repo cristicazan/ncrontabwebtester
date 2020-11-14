@@ -28,15 +28,15 @@ function App() {
 
   async function buttonClicked() {
     const url = process.env.REACT_APP_API_URL + '/getnextoccurrences'
-    const response = await fetch(url, {
+    fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(state)
-    });
-
-    console.log(response);
+    })
+      .then(response => response.json())
+      .then((response) => { console.log(response); })
   }
 
   const radios = [
