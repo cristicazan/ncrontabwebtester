@@ -32,11 +32,12 @@ namespace API
             return new OkObjectResult(responseMessage);
         }
 
-        public class Body 
+        public class Body
         {
             public string Expression { get; set; }
             public DateTime? StartDate { get; set; }
             public DateTime? EndDate { get; set; }
+            public bool IsSixPart { get; set; }
         }
     }
 }
