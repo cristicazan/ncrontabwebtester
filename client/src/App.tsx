@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, ButtonGroup, Col, Container, Form, Row, ToggleButton } from 'react-bootstrap';
+import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import DatePicker from "react-datepicker";
 
 // import "react-datepicker/dist/react-datepicker.css";
@@ -7,8 +7,8 @@ import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 function App() {
   const [state, setState] =
-    useState<{ startDate: null | Date, endDate: null | Date, isSixPart: boolean, expression: string }>
-      ({ startDate: null, endDate: null, isSixPart: false, expression: '' });
+    useState<{ startDate: null | Date, endDate: null | Date, includingSeconds: boolean, expression: string }>
+      ({ startDate: null, endDate: null, includingSeconds: false, expression: '' });
 
   function setStartDate(startDate: Date) {
     setState(prevState => ({ ...prevState, startDate }));
@@ -18,8 +18,8 @@ function App() {
     setState(prevState => ({ ...prevState, endDate }));
   }
 
-  function setIsSixPart(isSixPart: string) {
-    setState(prevState => ({ ...prevState, isSixPart: JSON.parse(isSixPart) }));
+  function setIncludingSeconds(includingSecondsCheckEvent: any) {
+    setState(prevState => ({ ...prevState, includingSeconds: JSON.parse(includingSecondsCheckEvent.target.checked) }));
   }
 
   function setExpression(expression: string) {
@@ -39,11 +39,6 @@ function App() {
       .then((response) => { console.log(response); })
   }
 
-  const radios = [
-    { name: "5 chars", value: false },
-    { name: "6 chars", value: true }
-  ];
-
   return (
     <div>
       <Container fluid>
@@ -59,7 +54,7 @@ function App() {
                   />
                 </Col> {' '}
 
-                <Col xs={{ span: 2, offset: 0 }}>
+                <Col xs={{ span: 2, offset: 1 }}>
                   <DatePicker
                     placeholderText="End date"
                     selected={state.endDate}
@@ -67,26 +62,11 @@ function App() {
                   />
                 </Col> {' '}
 
-                <Col xs={{ span: 2, offset: 0 }}>
-                  <ButtonGroup toggle>
-                    {radios.map((radio, index) => (
-                      <ToggleButton
-                        key={index}
-                        type="radio"
-                        name="radio"
-                        value={radio.value}
-                        checked={state.isSixPart === radio.value}
-                        onChange={e => setIsSixPart(e.currentTarget.value)}>
-                        {radio.name}
-                      </ToggleButton>
-                    ))}
-                  </ButtonGroup>
-                </Col>
-
               </Form.Group>
 
               <Form.Group as={Row}>
-                <Col xs={{ span: 4, offset: 0 }}>
+
+                <Col xs={{ span: 3, offset: 0 }}>
                   <Form.Control
                     placeholder="Expression"
                     value={state.expression}
@@ -94,10 +74,22 @@ function App() {
                   />
                 </Col>
 
-                <Col xs={{ span: 4, offset: 1 }}>
-                  <Button variant="primary" onClick={buttonClicked}>Calculate</Button>
+                <Col xs={{ span: 3, offset: 0 }}>
+                  <Form.Check
+                    type="switch"
+                    id="switch"
+                    checked={state.includingSeconds}
+                    onChange={setIncludingSeconds}
+                    label="Include seconds"
+                  />
                 </Col>
 
+              </Form.Group>
+
+              <Form.Group as={Row}>
+                <Col xs={{ span: 4, offset: 0 }}>
+                  <Button variant="primary" onClick={buttonClicked}>Calculate</Button>
+                </Col>
               </Form.Group>
             </Form>
           </Col>

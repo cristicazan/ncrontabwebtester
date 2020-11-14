@@ -24,7 +24,7 @@ namespace API
                 var body = JsonConvert.DeserializeObject<Body>(serializedBody);
 
                 var options = new NCrontab.CrontabSchedule.ParseOptions();
-                options.IncludingSeconds = body.IsSixPart;
+                options.IncludingSeconds = body.IncludingSeconds;
                 var cronSchedule = NCrontab.CrontabSchedule.Parse(body.Expression, options);
                 var occurrences = cronSchedule.GetNextOccurrences(body.StartDate, body.EndDate).ToArray();
                 return new OkObjectResult(JsonConvert.SerializeObject(occurrences));
@@ -40,7 +40,7 @@ namespace API
             public string Expression { get; set; }
             public DateTime StartDate { get; set; }
             public DateTime EndDate { get; set; }
-            public bool IsSixPart { get; set; }
+            public bool IncludingSeconds { get; set; }
         }
     }
 }
