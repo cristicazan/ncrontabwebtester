@@ -6,7 +6,7 @@ import REACT_APP_API_URL from "../App";
 // import "react-datepicker/dist/react-datepicker.css";
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
-export default function Generate() {
+export default function Test() {
     const [state, setState] =
         useState<{ startDate: null | Date, endDate: null | Date, includingSeconds: boolean, expression: string }>
             ({ startDate: null, endDate: null, includingSeconds: false, expression: '' });
