@@ -4,9 +4,7 @@ import { Col, Container, Nav, Row, Tab } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
 
-import Test from "./components/Test";
-
-export const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
+import Test from "./components/test/Test";
 
 class App extends Component {
 
