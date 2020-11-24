@@ -1,17 +1,56 @@
-import React, { Component } from "react";
-import { Col, Container, Nav, Row, Tab } from "react-bootstrap";
-
-import "react-datepicker/dist/react-datepicker.css";
-import "react-datepicker/dist/react-datepicker-cssmodules.css";
-
+import React from "react";
 import Test from "./pages/test/Test";
+import Generate from "./pages/generate/Generate";
+import Tabs from "@material-ui/core/Tabs/Tabs";
+import { Tab } from "@material-ui/core";
+import { BrowserRouter as Router, Route, Link, Redirect, Switch } from "react-router-dom";
 
-class App extends Component {
+class App extends React.Component<{}, { tab: string }> {
+  constructor(props: {}) {
+    super(props);
+
+    this.state = {
+      tab: 'test'
+    };
+
+    // This binding is necessary to make `this` work in the callback
+    this.handleTabChange = this.handleTabChange.bind(this);
+  }
+
+  handleTabChange(event: React.ChangeEvent<{}>, newValue: string) {
+    this.setState({
+      tab: newValue
+    })
+  };
 
   render() {
     return (
       <div>
-        <Container fluid>
+        <Router>
+          <div>
+            <Tabs
+              orientation="vertical"
+              variant="scrollable"
+              value={this.state.tab}
+              onChange={this.handleTabChange}
+              aria-label="Vertical tabs example"
+            >
+              <Tab label="Item One" value="test" component={Link} to="/test" />
+              <Tab label="Item Two" value="generate" component={Link} to="/generate" />
+
+            </Tabs>
+
+            <Switch>
+              <Route path="/test" component={Test} />
+              <Route path="/generate" component={Generate} />
+              <Redirect to="/test" />
+            </Switch>
+
+          </div>
+
+        </Router>
+
+        {/* <Container fluid>
           <Row>
             <Col xs={{ span: 8, offset: 2 }}>
               <Tab.Container id="left-tabs-example" defaultActiveKey="first">
@@ -40,7 +79,7 @@ class App extends Component {
               </Tab.Container>
             </Col>
           </Row>
-        </Container>
+        </Container> */}
       </div>
     )
   }
