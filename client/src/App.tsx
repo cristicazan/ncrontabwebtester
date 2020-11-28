@@ -1,21 +1,45 @@
 import React from "react";
-import Test from "./pages/test/Test";
-import Generate from "./pages/generate/Generate";
+import Occurrences from "./pages/occurrences/Occurrences";
+import Expression from "./pages/expression/Expression";
 import Tabs from "@material-ui/core/Tabs/Tabs";
-import { Tab } from "@material-ui/core";
+import { Container, createMuiTheme, Grid, Tab, Theme, ThemeProvider } from "@material-ui/core";
 import { BrowserRouter as Router, Route, Link, Redirect, Switch } from "react-router-dom";
+import { indigo } from "@material-ui/core/colors";
 
 class App extends React.Component<{}, { tab: string }> {
   constructor(props: {}) {
     super(props);
 
     this.state = {
-      tab: 'test'
+      tab: 'occurrences',
     };
 
     // This binding is necessary to make `this` work in the callback
     this.handleTabChange = this.handleTabChange.bind(this);
   }
+
+  theme: Theme = createMuiTheme({
+    palette: {
+      secondary: {
+        main: indigo[400],
+      },
+      primary: {
+        main: indigo[300],
+      },
+    },
+    overrides: {
+      MuiTab: {
+        root: {
+          maxWidth: '100%'
+        }
+      },
+      MuiFormGroup: {
+        row: {
+          paddingTop: '10px'
+        }
+      }
+    }
+  });
 
   handleTabChange(event: React.ChangeEvent<{}>, newValue: string) {
     this.setState({
@@ -26,60 +50,34 @@ class App extends React.Component<{}, { tab: string }> {
   render() {
     return (
       <div>
-        <Router>
-          <div>
-            <Tabs
-              orientation="vertical"
-              variant="scrollable"
-              value={this.state.tab}
-              onChange={this.handleTabChange}
-              aria-label="Vertical tabs example"
-            >
-              <Tab label="Item One" value="test" component={Link} to="/test" />
-              <Tab label="Item Two" value="generate" component={Link} to="/generate" />
+        <ThemeProvider theme={this.theme}>
+          <Container maxWidth="lg">
+            <Router>
+              <Grid container spacing={2}>
+                <Grid item sm={4} md={3} >
+                  <Tabs
+                    orientation="vertical"
+                    variant="scrollable"
+                    value={this.state.tab}
+                    onChange={this.handleTabChange}
+                    aria-label="Vertical tabs example"
+                  >
+                    <Tab label="Generate occurrences" value="occurrences" component={Link} to="/occurrences" color="primary" />
+                    <Tab label="Generate expression" value="expression" component={Link} to="/expression" color="primary" />
+                  </Tabs>
+                </Grid>
 
-            </Tabs>
-
-            <Switch>
-              <Route path="/test" component={Test} />
-              <Route path="/generate" component={Generate} />
-              <Redirect to="/test" />
-            </Switch>
-
-          </div>
-
-        </Router>
-
-        {/* <Container fluid>
-          <Row>
-            <Col xs={{ span: 8, offset: 2 }}>
-              <Tab.Container id="left-tabs-example" defaultActiveKey="first">
-                <Row>
-                  <Col sm={3}>
-                    <Nav variant="pills" className="flex-column">
-                      <Nav.Item>
-                        <Nav.Link eventKey="first">Test</Nav.Link>
-                      </Nav.Item>
-                      <Nav.Item>
-                        <Nav.Link eventKey="second">Generate</Nav.Link>
-                      </Nav.Item>
-                    </Nav>
-                  </Col>
-                  <Col sm={9}>
-                    <Tab.Content>
-                      <Tab.Pane eventKey="first">
-                        <Test />
-                      </Tab.Pane>
-                      <Tab.Pane eventKey="second">
-                        Nothing
-                      </Tab.Pane>
-                    </Tab.Content>
-                  </Col>
-                </Row>
-              </Tab.Container>
-            </Col>
-          </Row>
-        </Container> */}
+                <Grid item sm={8} md={9} container>
+                  <Switch>
+                    <Route path="/occurrences" component={Occurrences} />
+                    <Route path="/expression" component={Expression} />
+                    <Redirect to="/occurrences" />
+                  </Switch>
+                </Grid>
+              </Grid>
+            </Router>
+          </Container>
+        </ThemeProvider>
       </div>
     )
   }

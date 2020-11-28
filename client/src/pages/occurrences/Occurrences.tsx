@@ -1,8 +1,8 @@
 import React from 'react';
-import { TestFormValues, TestForm } from "./TestForm";
+import { OccurrencesFormValues, OccurrencesForm } from "./OcurrencesForm";
 
-export default function Test() {
-    const initialValues: TestFormValues = { startDate: new Date(), endDate: new Date(), includingSeconds: true, expression: '* * * * * *' };
+export default function Occurrences() {
+    const initialValues: OccurrencesFormValues = { startDate: new Date(), endDate: new Date(), includingSeconds: true, expression: '0 5 * * * *' };
 
     async function generateClicked(formData: any) {
         const url = process.env.REACT_APP_API_URL + '/getnextoccurrences'
@@ -19,7 +19,7 @@ export default function Test() {
 
     return (
         <div>
-            <TestForm
+            <OccurrencesForm
                 initialValues={initialValues}
                 onSubmit={generateClicked}
             />

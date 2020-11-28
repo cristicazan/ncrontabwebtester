@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default function Generate() {
+export default function Expression() {
 
     return (
         <div>
-            Generate
+            Generate expression
         </div>
     );
 }
