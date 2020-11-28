@@ -1,10 +1,11 @@
-import React from "react";
-import Occurrences from "./pages/occurrences/Occurrences";
+import React, { Fragment } from "react";
+import Occurrences from "./pages/occurrences/components/Occurrences";
 import Expression from "./pages/expression/Expression";
 import Tabs from "@material-ui/core/Tabs/Tabs";
 import { Container, createMuiTheme, Grid, Tab, Theme, ThemeProvider } from "@material-ui/core";
 import { BrowserRouter as Router, Route, Link, Redirect, Switch } from "react-router-dom";
 import { indigo } from "@material-ui/core/colors";
+import SnackbarConfig from "./shared/components/SnackbarConfig";
 
 class App extends React.Component<{}, { tab: string }> {
   constructor(props: {}) {
@@ -50,6 +51,7 @@ class App extends React.Component<{}, { tab: string }> {
   render() {
     return (
       <div>
+        <SnackbarConfig />
         <ThemeProvider theme={this.theme}>
           <Container maxWidth="lg">
             <Router>
