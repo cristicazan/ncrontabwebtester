@@ -67,7 +67,7 @@ class App extends React.Component<{}, { tab: string }> {
                   </Tabs>
                 </Grid>
 
-                <Grid item sm={8} md={9} container>
+                <Grid item sm={8} md={9} container style={{ marginTop: '5px' }}>
                   <Switch>
                     <Route path="/occurrences" component={Occurrences} />
                     <Route path="/expression" component={Expression} />

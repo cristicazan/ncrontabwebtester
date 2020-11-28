@@ -1,5 +1,5 @@
 import React from 'react';
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import * as yup from 'yup';
 import { Formik } from "formik";
 import DateFnsUtils from '@date-io/date-fns';
@@ -21,15 +21,15 @@ const testFormSchema = yup.object({
     expression: yup.string().required("Expression is required"),
 })
 
-interface TestFormProps {
+interface OccurrencesFormProps {
     onSubmit?: any,
     initialValues?: OccurrencesFormValues
 }
 
-export const OccurrencesForm: React.FunctionComponent<TestFormProps> = ({
+export const OccurrencesForm: React.FunctionComponent<OccurrencesFormProps> = ({
     initialValues,
     onSubmit
-}: TestFormProps) => {
+}: OccurrencesFormProps) => {
     const handleSubmit = async (evt: any) => {
         const isValid = await testFormSchema.validate(evt);
         if (!isValid) {
@@ -88,29 +88,29 @@ export const OccurrencesForm: React.FunctionComponent<TestFormProps> = ({
                                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                     <Grid container spacing={2}>
                                         <Grid item xs={6}>
-                                            <KeyboardDatePicker
+                                            <KeyboardDateTimePicker
                                                 name="startDate"
                                                 value={values.startDate}
                                                 onChange={val => {
                                                     setFieldValue('startDate', val);
                                                 }}
                                                 openTo="date"
-                                                format="dd/MM/yyyy"
-                                                label="Start date"
+                                                format="dd/MM/yyyy HH:mm"
+                                                label="Start datetime"
                                                 views={["year", "month", "date"]}
                                             />
                                         </Grid>
 
                                         <Grid item xs={6}>
-                                            <KeyboardDatePicker
+                                            <KeyboardDateTimePicker
                                                 name="endDate"
                                                 value={values.endDate}
                                                 onChange={val => {
-                                                    setFieldValue('startDate', val);
+                                                    setFieldValue('endDate', val);
                                                 }}
                                                 openTo="date"
-                                                format="dd/MM/yyyy"
-                                                label="End date"
+                                                format="dd/MM/yyyy HH:mm"
+                                                label="End datetime"
                                                 views={["year", "month", "date"]}
                                             />
                                         </Grid>

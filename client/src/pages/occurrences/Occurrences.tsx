@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { OccurrencesFormValues, OccurrencesForm } from "./OcurrencesForm";
+import moment from 'moment';
+import { Console } from './Console';
+
 
 export default function Occurrences() {
-    const initialValues: OccurrencesFormValues = { startDate: new Date(), endDate: new Date(), includingSeconds: true, expression: '0 5 * * * *' };
+    const [occurences, setOccurrences] = useState(null);
+
+    const initialValues: OccurrencesFormValues = { startDate: moment().toDate(), endDate: moment().add(1, 'days').toDate(), includingSeconds: true, expression: '0 5 * * * *' };
 
     async function generateClicked(formData: any) {
         const url = process.env.REACT_APP_API_URL + '/getnextoccurrences'
@@ -14,7 +19,7 @@ export default function Occurrences() {
             body: JSON.stringify(formData)
         })
             .then(response => response.json())
-            .then((response) => { console.log(response); })
+            .then((response) => { setOccurrences(response); })
     }
 
     return (
@@ -23,6 +28,7 @@ export default function Occurrences() {
                 initialValues={initialValues}
                 onSubmit={generateClicked}
             />
-        </div>
+            <Console occurrences={occurences} />
+        </div >
     );
 }
